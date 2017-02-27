@@ -1,5 +1,5 @@
 export default class MinesSweeper {
-	// B,F,0,1,2,3,4,5,6,7,8
+	
 	constructor(bomb = 0.25){	
 	   this._width = 15;
 	   this._height = 10;

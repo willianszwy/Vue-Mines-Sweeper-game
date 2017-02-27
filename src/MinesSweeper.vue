@@ -10,12 +10,20 @@
              v-bind:class="{ visible : item._visible, showMine : item._mine && item._visible}">
 
             <template v-if="item._visible">
-               <span >{{ item._count ? item._count : ' '}}</span>
+               <span v-bind:class=" 'color-' + item._count">
+               {{ item._count ? item._count : ' '}}</span>
             </template>
 
         </div>
-      </div>
-    </template>
+        </template>
+    </div>
+   
+    <message v-bind:message="msg" 
+               v-bind:green="win" 
+               v-bind:show="isMsgVisible">        
+    </message>
+
+    
 
   </div>
 </template>
@@ -23,33 +31,53 @@
 <script>
 
 import  MinesSweeper , { GridElement, Array2D} from './MinesSweeper.js'
+import  Message from './Message.vue'
 
 
 export default {
   name: 'mines-sweeper',
   data () {
     return {
+      msg: '',
+      isMsgVisible: false,
+      win: true,
       game: new MinesSweeper(0.05)
     }
+  },
+  components: {
+    Message
   },
   methods: {
      run (event) {
         let [x, y] =  event.currentTarget.id.split('-').map(Number);
 
 
-         if(this.$data.game.hasMine( y, x)){
-              this.$data.game.showMines();
-              alert('Boom!!!');
+         if(this.game.hasMine( y, x)){
+              this.game.showMines();
+              this.showMsg('Game Over!', false);
          }else {
                
               let visited = Array2D(10,15);
-              this.$data.game.uncover( y, x, visited );
+              this.game.uncover( y, x, visited );
 
-              if(this.$data.game.checkWin()){
-                  alert('ganhou');
+              if(this.game.checkWin()){
+                  this.showMsg('You Win!', true);
               }
        }
+     },
+     showMsg (message, win) {
+        this.isMsgVisible = true;
+        this.msg = message;
+        this.win = win;
+        this.restart();
+     },
+     restart() {
+        setTimeout(function () {
+           window.location.reload(); 
+        }, 2500);
      }
+     
+
   }
  
 }
@@ -62,24 +90,21 @@ export default {
    flex-wrap: wrap;
    justify-content: space-between;
    align-content: space-around;
-   align-items: center;
-
-   // border: 1px solid #ccc;
+   align-items: center;  
 
    width: 644px;
-   // height: 1000px;
-   //padding: 5px;
 
  }
 
- $color-bg: #9C27B0;
+ $color-bg: #9a9a9a;
 
- $item-colors:
-  #FF9800, #FF5722, #607D8B, #4CAF50, #8BC34A, #40C4FF,
-  #0277BD, #4DB6AC, #009688, #448AFF, #42A5F5, #7E57C2,
-  #D32F2F, #AB47BC;
+$item-colors: 
+#BBBB88,
+#CCC68D,
+#EEDD99,
+#EEC290,
+#EEAA88;
 
-// where y is number of elements
 @mixin backgrounds($colors, $y) {
   @for $i from 1 through $y {
     $color: random(length($colors));
@@ -96,23 +121,38 @@ export default {
      width: 40px;
      height: 40px;
      margin-bottom: 1px; 
-     font-weight: 900;
+     font-weight: 800;
 
-     border: 1px solid darken(#fff , 75%);
+     border: 1px solid darken($color-bg , 25%);
 
-     // background-color: $color-bg ;
+     
      @include backgrounds($item-colors, 150 );
-     color: #fff;     
+         
 
      cursor: pointer;
- }
+ 
 
- .visible {
-        background-color: #9a9a9a !important;
-     }
+    &.visible {
+        background-color: $color-bg !important;
+    }
 
-  .showMine {
-    background: red url(assets/mine.png) !important;
-  }    
+    &.showMine {
+        background: red url(assets/mine.png) !important;
+    }
+
+    span {
+      &.color-1 { color : #b71c1c}
+      &.color-2 { color : #4A148C}
+      &.color-3 { color : #0D47A1}
+      &.color-4 { color : #004D40}
+      &.color-5 { color : #33691E}
+      &.color-6 { color : #F57F17}
+      &.color-7 { color : #BF360C}
+      &.color-8 { color : #000}    
+
+
+    }   
+
+  }
 
 </style>
