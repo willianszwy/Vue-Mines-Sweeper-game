@@ -24,8 +24,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: 'Amatica SC';
-  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Amatica SC', cursive;
   text-align: center;
   color: #fff;
   margin-top: 20px;
@@ -45,7 +44,8 @@ export default {
 }
 
 body {
-   background: #1a4148;
+   
+   background: #337d8a;
    color: #fff;
    font-size: 16px;
 }
