@@ -1,6 +1,6 @@
 # Minesweeper
 
-Vue Game - Minesweeper
+Vue Game - Minesweeper [Demo](http://willians.me/minesweeper/)
 
 ## Build Setup
 
