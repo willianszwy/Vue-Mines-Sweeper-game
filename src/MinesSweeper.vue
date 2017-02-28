@@ -72,9 +72,9 @@ export default {
         this.restart();
      },
      restart() {
-        // setTimeout(function () {
-        //    window.location.reload(); 
-        // }, 2500);
+        setTimeout(function () {
+           window.location.reload(); 
+        }, 2000);
      }
      
 
