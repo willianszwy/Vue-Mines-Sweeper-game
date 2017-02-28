@@ -1,6 +1,7 @@
 <template>
   <div class="msg" v-show="show">
-         <p v-bind:class="{ win: green}">{{message}}</p>
+         <h1 v-bind:class="{ win: green}">{{message}}</h1>
+         <img src="src/assets/dead.png" v-show="!green">
   </div>
 </template>
 
@@ -15,16 +16,18 @@ export default {
 <style lang="scss">
 
 .msg {
-       font-family: Helvetica, Arial, sans-serif;
        text-align: center;
        color: red;
-       font-size: 5em;
+       font-size: 2em;
        font-weight: 900;
 
       
-       display: flex;
-       
+       display: flex;       
        justify-content: center;
+       align-items: center;
+
+
+       flex-direction: column;
 
        overflow: hidden;
        z-index: 1986;
@@ -36,8 +39,9 @@ export default {
        top: 0;
        background-color: rgba(10, 10, 10, 0.60);
 
-       p {
+       h1 {
           color: #FF5722;
+          margin: 0;
 
           &.win {
             color: #4CAF50 !important;

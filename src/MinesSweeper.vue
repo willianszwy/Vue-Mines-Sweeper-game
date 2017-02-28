@@ -72,9 +72,9 @@ export default {
         this.restart();
      },
      restart() {
-        setTimeout(function () {
-           window.location.reload(); 
-        }, 2500);
+        // setTimeout(function () {
+        //    window.location.reload(); 
+        // }, 2500);
      }
      
 
@@ -113,7 +113,8 @@ $item-colors:
 }
 
  .field-box {
-
+     font-family: 'Boogaloo', cursive;
+     font-size: 1.4em;
      display: flex;
      align-items: center;
      justify-content: center;
@@ -121,9 +122,7 @@ $item-colors:
      width: 40px;
      height: 40px;
      margin-bottom: 1px; 
-     font-weight: 800;
-
-     border: 1px solid darken($color-bg , 25%);
+     border: 1px solid darken($color-bg , 15%);
 
      
      @include backgrounds($item-colors, 150 );

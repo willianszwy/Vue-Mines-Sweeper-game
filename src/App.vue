@@ -13,7 +13,7 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'MINES SWEEPER'
+      msg: '.: MINESWEEPER :. '
     }
   },
   components : {
@@ -24,13 +24,11 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Amatica SC';
+  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
   margin-top: 20px;
-
   display: flex;
 
   align-items: center;
@@ -38,6 +36,18 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  h1 {
+    font-size: 3.5em;
+  }
+
+  
+}
+
+body {
+   background: #1a4148;
+   color: #fff;
+   font-size: 16px;
 }
 
 
