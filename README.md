@@ -1,6 +1,6 @@
-# minado
+# Minesweeper
 
-Vue Game - Mines Sweeper
+Vue Game - Minesweeper
 
 ## Build Setup
 
