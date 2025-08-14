@@ -14,9 +14,10 @@ Um jogo Campo Minado clássico desenvolvido com Vue.js 2, modernizado com Vite e
 - 🎨 **Design moderno**: Interface colorida com animações suaves
 - ⚡ **Build rápido**: Powered by Vite para desenvolvimento ágil
 - 🚀 **Auto-deploy**: CI/CD automático com GitHub Actions
-- 📱 **Responsivo**: Funciona perfeitamente em desktop e mobile
-- 🎮 **UX aprimorada**: Reinício automático e feedback visual
+- 📱 **Mobile-first**: Totalmente responsivo com touch events otimizados
+- 🎮 **UX aprimorada**: Feedback tátil, zoom controlado e interface adaptativa
 - 💾 **Zero config**: Pronto para usar, sem configurações complexas
+- 🖱️ **Multi-input**: Suporte nativo para mouse, touch e diferentes tamanhos de tela
 
 ## 🛠 Stack Tecnológica
 
@@ -71,6 +72,12 @@ npm run deploy
 - **Auto-reveal**: Células vazias revelam áreas adjacentes automaticamente
 - **Game Over**: Clicar em mina revela todas as minas
 - **Auto-restart**: Jogo reinicia automaticamente após 2 segundos
+
+### 📱 Responsividade
+- **Desktop**: Grid original 40x40px por célula
+- **Tablet (≤768px)**: Células 32x32px com layout adaptado  
+- **Mobile (≤480px)**: Células 22x22px otimizadas para touch
+- **Mobile pequeno (≤360px)**: Células 20x20px para telas menores
 
 ## 🚀 Deploy no GitHub Pages
 
