@@ -153,7 +153,7 @@ export default {
   }
 }
 
-$color-bg: #9a9a9a;
+$color-bg: #B5B5A3; // Cinza com tom bege para harmonizar com as cores
 
 $item-colors: 
 #BBBB88,
@@ -162,26 +162,40 @@ $item-colors:
 #EEC290,
 #EEAA88;
 
-@mixin backgrounds($colors, $y) {
+// Modernizar cores com gradientes sutis mantendo as cores originais
+@mixin modern-backgrounds($colors, $y) {
   @for $i from 1 through $y {
     $color: random(length($colors));
-    &:nth-child(#{$i}) { background: nth($colors, $color); }
+    $base-color: nth($colors, $color);
+    &:nth-child(#{$i}):not(.visible):not(.showMine) { 
+      background: linear-gradient(135deg, 
+        lighten($base-color, 8%) 0%, 
+        $base-color 50%, 
+        darken($base-color, 5%) 100%
+      );
+      border: 1px solid rgba(darken($base-color, 15%), 0.3);
+      box-shadow: 
+        inset 0 1px 0 rgba(white, 0.2),
+        0 1px 2px rgba(black, 0.1);
+    }
   }
 }
 
 .field-box {
   font-family: 'Boogaloo', cursive;
   font-size: 1.4em;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   
-  // Desktop (original)
+  // Desktop (original) com modernizações
   width: 40px;
   height: 40px;
-  border: 1px solid darken($color-bg, 15%);
+  border-radius: 6px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   
-  @include backgrounds($item-colors, 150);
+  @include modern-backgrounds($item-colors, 150);
   
   cursor: pointer;
   user-select: none;
@@ -192,6 +206,7 @@ $item-colors:
     width: 32px;
     height: 32px;
     font-size: 1.2em;
+    border-radius: 5px;
   }
   
   // Mobile
@@ -199,7 +214,7 @@ $item-colors:
     width: 22px;
     height: 22px;
     font-size: 0.9em;
-    border-width: 0.5px;
+    border-radius: 4px;
   }
   
   // Mobile pequeno
@@ -207,21 +222,36 @@ $item-colors:
     width: 20px;
     height: 20px;
     font-size: 0.8em;
+    border-radius: 3px;
   }
   
-  // Estados visuais mantidos
+  // Estado visível - flat como original  
   &.visible {
-    background-color: $color-bg !important;
+    background: $color-bg !important;
+    border: 1px solid darken($color-bg, 15%) !important;
+    box-shadow: none !important;
   }
   
   &.showMine {
-    background: red url(/assets/mine.png) !important;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 50%, #dc4545 100%) !important;
+    border: 1px solid rgba(darken(#dc4545, 15%), 0.6) !important;
+    box-shadow: 
+      inset 0 1px 0 rgba(white, 0.2),
+      0 2px 8px rgba(red, 0.3) !important;
+    
+    &::after {
+      content: '💣';
+      font-size: 0.8em;
+      filter: drop-shadow(1px 1px 2px rgba(black, 0.3));
+    }
   }
   
   span {
+    font-family: 'Kalam', 'Comic Sans MS', 'Marker Felt', cursive;
+    text-shadow: 1px 1px 2px rgba(black, 0.4);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    
     &.color-1 { color: #b71c1c; }
     &.color-2 { color: #4A148C; }
     &.color-3 { color: #0D47A1; }
@@ -232,19 +262,23 @@ $item-colors:
     &.color-8 { color: #000; }
   }
   
-  // Melhor feedback visual para touch
+  // Efeitos de interação modernos
   &:active,
   &.touching {
-    transform: scale(0.95);
-    transition: transform 0.1s ease;
-    opacity: 0.8;
+    transform: scale(0.95) translateY(1px);
+    box-shadow: 
+      inset 0 1px 0 rgba(white, 0.1),
+      0 1px 3px rgba(black, 0.2);
   }
   
-  // Hover apenas em desktop
+  // Hover apenas em desktop com efeitos modernos
   @media (hover: hover) {
-    &:hover {
-      opacity: 0.9;
-      transition: opacity 0.2s ease;
+    &:hover:not(.visible):not(.showMine) {
+      transform: translateY(-1px);
+      box-shadow: 
+        inset 0 1px 0 rgba(white, 0.3),
+        0 3px 8px rgba(black, 0.15);
+      filter: brightness(1.05);
     }
   }
 }
