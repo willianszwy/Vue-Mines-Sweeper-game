@@ -57,11 +57,11 @@ export default {
        if (typeof window !== 'undefined') {
          const width = window.innerWidth;
          if (width <= 480) {
-           // Mobile: 10x6 para tiles maiores e mais fáceis de clicar
-           return new MinesSweeper(0.05, 10, 6);
+           // Mobile: 8x10 para aproveitar melhor o espaço vertical
+           return new MinesSweeper(0.05, 8, 10);
          } else if (width <= 768) {
-           // Tablet: 12x8 para aproveitamento médio
-           return new MinesSweeper(0.05, 12, 8);
+           // Tablet: 10x8 para melhor aproveitamento vertical
+           return new MinesSweeper(0.05, 10, 8);
          }
        }
        // Desktop: 15x10 original
@@ -150,19 +150,19 @@ export default {
   width: 614px;
   max-width: 100%;
   
-  // Tablet - 12x8 para melhor usabilidade
+  // Tablet - 10x8 para melhor aproveitamento vertical
   @media (max-width: 768px) and (min-width: 481px) {
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(8, 1fr);
     width: calc(100vw - 40px);
     max-width: calc(100vw - 40px);
     padding: 0 5px;
   }
   
-  // Mobile - 10x6 para tiles maiores e mais fáceis de clicar
+  // Mobile - 8x10 para aproveitar melhor o espaço vertical
   @media (max-width: 480px) {
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(10, 1fr);
     width: calc(100vw - 20px);
     max-width: calc(100vw - 20px);
     padding: 0 5px;
@@ -212,34 +212,34 @@ $item-colors:
   border-radius: 6px;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   
-  // Background para desktop (15x10=150), tablet (12x8=96), mobile (10x6=60)
+  // Background para desktop (15x10=150), tablet (10x8=80), mobile (8x10=80)
   @include modern-backgrounds($item-colors, 150);
   
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
   
-  // Tablet - 12 colunas para tiles maiores
+  // Tablet - 10 colunas para tiles maiores
   @media (max-width: 768px) and (min-width: 481px) {
-    width: calc((100vw - 60px) / 12); // 12 colunas no tablet
-    height: calc((100vw - 60px) / 12);
+    width: calc((100vw - 60px) / 10); // 10 colunas no tablet
+    height: calc((100vw - 60px) / 10);
     min-width: 35px; // tamanho mínimo para facilitar toque
     min-height: 35px;
-    max-width: 55px;
-    max-height: 55px;
+    max-width: 60px;
+    max-height: 60px;
     font-size: clamp(1em, 2.5vw, 1.4em);
     border-radius: 5px;
   }
   
-  // Mobile - 10 colunas para tiles bem grandes e fáceis de clicar
+  // Mobile - 8 colunas para aproveitar espaço vertical
   @media (max-width: 480px) {
-    width: calc((100vw - 40px) / 10); // 10 colunas no mobile
-    height: calc((100vw - 40px) / 10);
-    min-width: 30px; // tamanho mínimo confortável para toque
-    min-height: 30px;
-    max-width: 45px;
-    max-height: 45px;
-    font-size: clamp(0.8em, 3.5vw, 1.2em);
+    width: calc((100vw - 40px) / 8); // 8 colunas no mobile
+    height: calc((100vw - 40px) / 8);
+    min-width: 35px; // tamanho maior para facilitar toque
+    min-height: 35px;
+    max-width: 50px;
+    max-height: 50px;
+    font-size: clamp(0.9em, 4vw, 1.3em);
     border-radius: 4px;
   }
   
