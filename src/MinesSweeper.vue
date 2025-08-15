@@ -43,7 +43,7 @@ export default {
       msg: '',
       isMsgVisible: false,
       win: true,
-      game: new MinesSweeper(0.05),
+      game: this.createGame(),
       touchStartTime: 0,
       touchStartElement: null
     }
@@ -52,6 +52,22 @@ export default {
     Message
   },
   methods: {
+     createGame() {
+       // Detectar tamanho da tela para ajustar grid
+       if (typeof window !== 'undefined') {
+         const width = window.innerWidth;
+         if (width <= 480) {
+           // Mobile: 10x6 para tiles maiores e mais fáceis de clicar
+           return new MinesSweeper(0.05, 10, 6);
+         } else if (width <= 768) {
+           // Tablet: 12x8 para aproveitamento médio
+           return new MinesSweeper(0.05, 12, 8);
+         }
+       }
+       // Desktop: 15x10 original
+       return new MinesSweeper(0.05, 15, 10);
+     },
+     
      run (event) {
         let [x, y] =  event.currentTarget.id.split('-').map(Number);
 
@@ -60,7 +76,7 @@ export default {
               this.showMsg('Game Over!', false);
          }else {
                
-              let visited = Array2D(10,15);
+              let visited = Array2D(this.game._height, this.game._width);
               this.game.uncover( y, x, visited );
 
               if(this.game.checkWin()){
@@ -126,30 +142,30 @@ export default {
 
 .mines-field {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
-  grid-template-rows: repeat(10, 1fr);
   gap: 1px;
   
-  // Desktop (original) - 15 colunas * 40px + 14 gaps * 1px = 614px
+  // Desktop (original) - 15x10
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   width: 614px;
   max-width: 100%;
   
-  // Tablet
-  @media (max-width: 768px) {
-    width: 100%;
-    max-width: 494px; // 15 * 32px + 14 * 1px
-  }
-  
-  // Mobile
-  @media (max-width: 480px) {
-    width: 100%;
-    max-width: 344px; // 15 * 22px + 14 * 1px
+  // Tablet - 12x8 para melhor usabilidade
+  @media (max-width: 768px) and (min-width: 481px) {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px);
     padding: 0 5px;
   }
   
-  // Mobile pequeno
-  @media (max-width: 360px) {
-    max-width: 314px; // 15 * 20px + 14 * 1px
+  // Mobile - 10x6 para tiles maiores e mais fáceis de clicar
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+    padding: 0 5px;
   }
 }
 
@@ -163,8 +179,9 @@ $item-colors:
 #EEAA88;
 
 // Modernizar cores com gradientes sutis mantendo as cores originais
-@mixin modern-backgrounds($colors, $y) {
-  @for $i from 1 through $y {
+// Ajustado para diferentes tamanhos de grid
+@mixin modern-backgrounds($colors, $max-cells) {
+  @for $i from 1 through $max-cells {
     $color: random(length($colors));
     $base-color: nth($colors, $color);
     &:nth-child(#{$i}):not(.visible):not(.showMine) { 
@@ -195,34 +212,35 @@ $item-colors:
   border-radius: 6px;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   
+  // Background para desktop (15x10=150), tablet (12x8=96), mobile (10x6=60)
   @include modern-backgrounds($item-colors, 150);
   
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
   
-  // Tablet
-  @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2em;
+  // Tablet - 12 colunas para tiles maiores
+  @media (max-width: 768px) and (min-width: 481px) {
+    width: calc((100vw - 60px) / 12); // 12 colunas no tablet
+    height: calc((100vw - 60px) / 12);
+    min-width: 35px; // tamanho mínimo para facilitar toque
+    min-height: 35px;
+    max-width: 55px;
+    max-height: 55px;
+    font-size: clamp(1em, 2.5vw, 1.4em);
     border-radius: 5px;
   }
   
-  // Mobile
+  // Mobile - 10 colunas para tiles bem grandes e fáceis de clicar
   @media (max-width: 480px) {
-    width: 22px;
-    height: 22px;
-    font-size: 0.9em;
+    width: calc((100vw - 40px) / 10); // 10 colunas no mobile
+    height: calc((100vw - 40px) / 10);
+    min-width: 30px; // tamanho mínimo confortável para toque
+    min-height: 30px;
+    max-width: 45px;
+    max-height: 45px;
+    font-size: clamp(0.8em, 3.5vw, 1.2em);
     border-radius: 4px;
-  }
-  
-  // Mobile pequeno
-  @media (max-width: 360px) {
-    width: 20px;
-    height: 20px;
-    font-size: 0.8em;
-    border-radius: 3px;
   }
   
   // Estado visível - flat como original  
