@@ -136,7 +136,7 @@ $item-colors:
     }
 
     &.showMine {
-        background: red url(assets/mine.png) !important;
+        background: red url(/assets/mine.png) !important;
     }
 
     span {

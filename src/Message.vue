@@ -1,7 +1,7 @@
 <template>
   <div class="msg" v-show="show">
          <h1 v-bind:class="{ win: green}">{{message}}</h1>
-         <img src="./assets/dead.png" v-show="!green">
+         <img src="/assets/dead.png" v-show="!green">
   </div>
 </template>
 
