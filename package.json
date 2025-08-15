@@ -5,6 +5,10 @@
   "author": "willianszwy <willianszwy@gmail.com>",
   "private": false,
   "homepage": "https://willianszwy.github.io/vue-minesweeper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willianszwy/vue-minesweeper.git"
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

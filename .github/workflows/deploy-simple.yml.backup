@@ -1,0 +1,27 @@
+# Backup workflow - use if main deploy fails
+name: Simple Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+          
+      - name: Deploy with gh-pages
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          npx gh-pages -d dist
